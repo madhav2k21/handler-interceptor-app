@@ -64,15 +64,17 @@ class HandlerInterceptorAppApplicationTests {
 		Message message = new Message(101, "Please start onboarding process");
 		ObjectMapper mapper = new ObjectMapper();
 		String msgJson = mapper.writeValueAsString(message);
-		 MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/messages")
-		 .contentType(MediaType.APPLICATION_JSON)
-		 .content(msgJson);
-		 
-		 ResultActions perform = mockMvc.perform(requestBuilder);
-		 
-		 MvcResult result = perform.andReturn();
-		 MockHttpServletResponse response = result.getResponse();
-		 assertEquals(201, response.getStatus());
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/messages")
+				.contentType(MediaType.APPLICATION_JSON).content(msgJson);
+
+		ResultActions perform = mockMvc.perform(requestBuilder);
+
+		MvcResult result = perform.andReturn();
+		MockHttpServletResponse response = result.getResponse();
+		assertEquals(201, response.getStatus());
+
+		String contentAsString = response.getContentAsString();
+		assertEquals(msg, contentAsString);
 	}
 
 //	@Test
